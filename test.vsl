@@ -1,2 +1,2 @@
 i = 2, j = 4, k = 8
-/*This is a comment*/...
+/*And this is a comment which does not work*/

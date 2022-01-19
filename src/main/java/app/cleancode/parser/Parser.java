@@ -25,9 +25,8 @@ public class Parser {
 
     private List<Token> findTokens(String program) throws ParseException {
         List<Token> tokens = new ArrayList<>();
-        String temp = program;
+        String temp = program.replaceFirst("^" + description.getWhitespacePattern(), "");
         while (temp.length() > 0) {
-            temp = temp.replaceFirst("^" + description.getWhitespacePattern(), "");
             String match = null;
             for (TokenDescription token : description.getTokens()) {
                 Matcher matcher = Pattern.compile(token.getPattern()).matcher(temp);
@@ -38,10 +37,11 @@ public class Parser {
                 }
             }
             if (match == null) {
-                // TODO: Add line number
-                throw new ParseException(0, "Unknown token");
+                int line = (int) program.substring(0, program.indexOf(temp)).lines().count();
+                throw new ParseException(line, "Unknown token");
             } else {
                 temp = temp.substring(match.length());
+                temp = temp.replaceFirst("^" + description.getWhitespacePattern(), "");
             }
         }
         return tokens;
@@ -49,6 +49,7 @@ public class Parser {
 
     public Node parse(String program) throws ParseException {
         List<Token> programTokens = findTokens(program);
+        System.out.println(programTokens);
         return null;
     }
 
