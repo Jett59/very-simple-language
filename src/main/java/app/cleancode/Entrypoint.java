@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import app.cleancode.parser.Node;
 import app.cleancode.parser.ParseException;
 import app.cleancode.parser.Parser;
 
@@ -16,16 +17,15 @@ public class Entrypoint {
             parser = new Parser(new String(bufferedInputStream.readAllBytes()));
         }
         List<String> programLines = Files.readAllLines(Paths.get("test.vsl"));
+        Node parseTree = null;
         try {
-            parser.parse(String.join("\n", programLines));
+            parseTree = parser.parse(String.join("\n", programLines));
         } catch (ParseException e) {
             System.err.printf("test.vsl:%d: Error: %s\n%s\n", e.line, e.getMessage(),
                     programLines.get(e.line));
             System.exit(1);
         } catch (Throwable e) {
             e.printStackTrace();
-            System.err.println("Unexpected error:");
-            System.err.printf("%s: %s\n", e.getClass().getSimpleName(), e.getMessage());
         }
     }
 }

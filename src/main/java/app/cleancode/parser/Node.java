@@ -17,7 +17,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return String.format("Node [type=%s, children=%s, matchedTokens=%d]", type, children,
+        return String.format("Node [\ntype=%s,\nchildren=%s,\nmatchedTokens=%d]", type, children,
                 matchedTokens);
     }
 }
