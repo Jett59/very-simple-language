@@ -2,8 +2,8 @@
     "whitespacePattern": "(\\s|\t|\n|(/\\*.*?\\*/))+",
     "tokens": [
         {
-            "nodeType": "FUNCTION_SPECIFIER",
-            "pattern": "fn"
+            "nodeType": "MACRO_SPECIFIER",
+            "pattern": "macro"
         },
         {
             "valueType": "STRING",
@@ -22,6 +22,10 @@
         {
             "nodeType": "SEMICOLON",
             "pattern": ";"
+        },
+        {
+            "nodeType": "COLON",
+            "pattern": ":"
         },
         {
             "nodeType": "COMMA",
@@ -78,24 +82,45 @@
         {
             "type": "PROGRAM_ELEMENT",
             "children": [
-                "FUNCTION_DEFINITION"
+                "MACRO_DEFINITION"
             ],
             "childrenNames": {
                 "1": "element"
             }
         },
         {
-            "type": "FUNCTION_DEFINITION",
+            "type": "MACRO_DEFINITION",
             "children": [
-                "FUNCTION_SPECIFIER",
+                "MACRO_SPECIFIER",
                 "IDENTIFIER",
-                "LEFT_PAREN",
-                "RIGHT_PAREN",
+                "COLON",
+                "PARAMETER_LIST",
                 "LEFT_BRACE",
                 "RIGHT_BRACE"
             ],
             "childrenNames": {
-                "2": "name"
+                "2": "name",
+                "4": "parameters"
+            }
+        },
+        {
+            "type": "PARAMETER_LIST",
+            "children": [
+                "IDENTIFIER",
+                "PARAMETER_LIST"
+            ],
+            "childrenNames": {
+                "1": "parameter",
+                "2": "list"
+            }
+        },
+        {
+            "type": "PARAMETER_LIST",
+            "children": [
+                "IDENTIFIER"
+            ],
+            "childrenNames": {
+                "1": "parameter"
             }
         }
     ]

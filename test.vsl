@@ -1,4 +1,7 @@
 /*This is a comment*/
-i = 2, j = 4, k = 8,
-/*And this is also a comment*/
-a=1,b=2,c=3
+macro abc: a b c {
+
+}
+macro cba: c b a {
+
+}
