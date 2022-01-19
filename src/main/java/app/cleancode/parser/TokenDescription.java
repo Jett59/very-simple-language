@@ -38,4 +38,12 @@ public class TokenDescription {
         return String.format("TokenDescription [\nvalueType=%s,\nnodeType=%s,\npattern=\"%s\"]",
                 valueType, nodeType, pattern);
     }
+
+    public Object getValue(String s) {
+        return switch (valueType) {
+            case NONE -> null;
+            case NUMBER -> Double.parseDouble(s);
+            case STRING -> s;
+        };
+    }
 }

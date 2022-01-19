@@ -3,9 +3,18 @@ package app.cleancode.parser;
 import java.util.List;
 
 public class ParserDescription {
+    private String whitespacePattern; // (useful for comments)
     private List<TokenDescription> tokens;
     private NodeType rootNode;
     private List<NodeDescription> nodes;
+
+    public String getWhitespacePattern() {
+        return whitespacePattern;
+    }
+
+    public void setWhitespacePattern(String whitespacePattern) {
+        this.whitespacePattern = whitespacePattern;
+    }
 
     public List<TokenDescription> getTokens() {
         return tokens;

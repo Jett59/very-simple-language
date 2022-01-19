@@ -1,4 +1,5 @@
 {
+    "whitespacePattern": "\\s|\t|\n|[/\\*[.|\n]*\\*/]",
     "tokens": [
         {
             "valueType": "STRING",
