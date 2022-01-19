@@ -54,6 +54,9 @@ public class NodeDescription {
             }
             NodeType expected = children.get(i);
             if (expected.terminal) {
+                System.out.printf(
+                        "Checking for terminal symbol %s\nMatched: %d, actually there: %s\n",
+                        expected, matchedTokens, tokens.get(matchedTokens));
                 if (!tokens.get(matchedTokens).type().equals(expected)) {
                     matched = false;
                     break;

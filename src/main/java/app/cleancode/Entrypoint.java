@@ -24,8 +24,11 @@ public class Entrypoint {
             System.err.printf("test.vsl:%d: Error: %s\n%s\n", e.line, e.getMessage(),
                     programLines.get(e.line));
             System.exit(1);
-        } catch (Throwable e) {
+        } catch (StackOverflowError e) {
+            System.err.println("Stack overflow error");
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(parseTree);
     }
 }

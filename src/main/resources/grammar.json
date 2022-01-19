@@ -2,6 +2,10 @@
     "whitespacePattern": "(\\s|\t|\n|(/\\*.*?\\*/))+",
     "tokens": [
         {
+            "nodeType": "FUNCTION_SPECIFIER",
+            "pattern": "fn"
+        },
+        {
             "valueType": "STRING",
             "nodeType": "IDENTIFIER",
             "pattern": "[a-zA-Z_][a-zA-Z0-9\\$_]*"
@@ -22,41 +26,76 @@
         {
             "nodeType": "COMMA",
             "pattern": ","
+        },
+        {
+            "nodeType": "LEFT_PAREN",
+            "pattern": "\\("
+        },
+        {
+            "nodeType": "RIGHT_PAREN",
+            "pattern": "\\)"
+        },
+        {
+            "nodeType": "LEFT_BRACE",
+            "pattern": "\\{"
+        },
+        {
+            "nodeType": "RIGHT_BRACE",
+            "pattern": "\\}"
         }
     ],
-    "rootNode": "ASSIGNMENT_EXPRESSION_LIST",
+    "rootNode": "PROGRAM",
     "nodes": [
         {
-            "type": "ASSIGNMENT_EXPRESSION",
+            "type": "PROGRAM",
             "children": [
+                "PROGRAM_ELEMENT_LIST"
+            ],
+            "childrenNames": {
+                "1": "elements"
+            }
+        },
+        {
+            "type": "PROGRAM_ELEMENT_LIST",
+            "children": [
+                "PROGRAM_ELEMENT"
+            ],
+            "childrenNames": {
+                "1": "element"
+            }
+        },
+        {
+            "type": "PROGRAM_ELEMENT_LIST",
+            "children": [
+                "PROGRAM_ELEMENT",
+                "PROGRAM_ELEMENT_LIST"
+            ],
+            "childrenNames": {
+                "1": "element",
+                "2": "list"
+            }
+        },
+        {
+            "type": "PROGRAM_ELEMENT",
+            "children": [
+                "FUNCTION_DEFINITION"
+            ],
+            "childrenNames": {
+                "1": "element"
+            }
+        },
+        {
+            "type": "FUNCTION_DEFINITION",
+            "children": [
+                "FUNCTION_SPECIFIER",
                 "IDENTIFIER",
-                "EQUALS",
-                "INTEGER"
+                "LEFT_PAREN",
+                "RIGHT_PAREN",
+                "LEFT_BRACE",
+                "RIGHT_BRACE"
             ],
             "childrenNames": {
-                "1": "name",
-                "3": "value"
-            }
-        },
-        {
-            "type": "ASSIGNMENT_EXPRESSION_LIST",
-            "children": [
-                "ASSIGNMENT_EXPRESSION"
-            ],
-            "childrenNames": {
-                "1": "expression"
-            }
-        },
-        {
-            "type": "ASSIGNMENT_EXPRESSION_LIST",
-            "children": [
-                "ASSIGNMENT_EXPRESSION",
-                "COMMA",
-                "ASSIGNMENT_EXPRESSION_LIST"
-            ],
-            "childrenNames": {
-                "1": "expression",
-                "3": "list"
+                "2": "name"
             }
         }
     ]

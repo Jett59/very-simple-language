@@ -58,7 +58,6 @@ public class Parser {
 
     public Node parse(String program) throws ParseException {
         List<Token> programTokens = findTokens(program);
-        System.out.println(programTokens);
         Node result = null;
         for (NodeDescription nodeDescription : nodeDescriptions.get(description.getRootNode())) {
             Node match = nodeDescription.match(programTokens, nodeDescriptions);
@@ -66,7 +65,6 @@ public class Parser {
                 result = match;
             }
         }
-        System.out.println(result);
         if (result == null) {
             throw new ParseException(0, "Failed to parse program");
         } else if (result.matchedTokens < programTokens.size()) {
