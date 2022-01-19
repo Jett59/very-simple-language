@@ -1,5 +1,6 @@
 package app.cleancode.parser;
 
-public class NodeType {
-
+public enum NodeType {
+    // Terminal symbols
+    IDENTIFIER
 }

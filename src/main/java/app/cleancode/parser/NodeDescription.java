@@ -1,10 +1,13 @@
 package app.cleancode.parser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NodeDescription {
     private NodeType type;
     private List<NodeType> children;
+    private Map<Integer, String> childrenNames = new HashMap<>();
 
     public NodeType getType() {
         return type;
@@ -20,5 +23,19 @@ public class NodeDescription {
 
     public void setChildren(List<NodeType> children) {
         this.children = children;
+    }
+
+    public Map<Integer, String> getChildrenNames() {
+        return childrenNames;
+    }
+
+    public void setChildrenNames(Map<Integer, String> childrenNames) {
+        this.childrenNames = childrenNames;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("NodeDescription [type=%s, children=%s, childrenNames=%s]", type,
+                children, childrenNames);
     }
 }

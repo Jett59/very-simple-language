@@ -33,4 +33,9 @@ public class TokenDescription {
         this.pattern = pattern;
     }
 
+    @Override
+    public String toString() {
+        return String.format("TokenDescription [valueType=%s, nodeType=%s, pattern=\"%s\"]",
+                valueType, nodeType, pattern);
+    }
 }
