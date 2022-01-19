@@ -4,6 +4,32 @@
             "valueType": "STRING",
             "nodeType": "IDENTIFIER",
             "pattern": "[a-zA-Z_][a-zA-Z0-9\\$_]*"
+        },
+        {
+            "valueType": "NUMBER",
+            "nodeType": "INTEGER",
+            "pattern": "[0-9]+"
+        },
+        {
+            "nodeType": "EQUALS",
+            "pattern": "="
+        },
+        {
+            "nodeType": "SEMICOLON",
+            "pattern": ";"
+        }
+    ],
+    "rootNode": "ASSIGNMENT_EXPRESSION_LIST",
+    "nodes": [
+        {
+            "type": "ASSIGNMENT_EXPRESSION",
+            "children": [
+                "IDENTIFIER", "EQUALS", "INTEGER"
+            ],
+            "childrenNames": {
+                "1": "name",
+                "3": "value"
+            }
         }
     ]
 }

@@ -16,6 +16,6 @@ public class Parser {
 
     @Override
     public String toString() {
-        return String.format("Parser [description=%s]", description);
+        return String.format("Parser [\ndescription=%s]", description);
     }
 }

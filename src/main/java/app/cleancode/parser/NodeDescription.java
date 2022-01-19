@@ -35,7 +35,7 @@ public class NodeDescription {
 
     @Override
     public String toString() {
-        return String.format("NodeDescription [type=%s, children=%s, childrenNames=%s]", type,
+        return String.format("NodeDescription [\ntype=%s,\nchildren=%s,\nchildrenNames=%s]", type,
                 children, childrenNames);
     }
 }
