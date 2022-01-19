@@ -50,13 +50,13 @@
         {
             "type": "ASSIGNMENT_EXPRESSION_LIST",
             "children": [
-                "ASSIGNMENT_EXPRESSION_LIST",
+                "ASSIGNMENT_EXPRESSION",
                 "COMMA",
-                "ASSIGNMENT_EXPRESSION"
+                "ASSIGNMENT_EXPRESSION_LIST"
             ],
             "childrenNames": {
-                "1": "list",
-                "3": "expression"
+                "1": "expression",
+                "3": "list"
             }
         }
     ]

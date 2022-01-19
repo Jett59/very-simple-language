@@ -1,5 +1,6 @@
 package app.cleancode.parser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,5 +38,57 @@ public class NodeDescription {
     public String toString() {
         return String.format("NodeDescription [\ntype=%s,\nchildren=%s,\nchildrenNames=%s]", type,
                 children, childrenNames);
+    }
+
+    public Node match(List<Token> tokens, Map<NodeType, List<NodeDescription>> nodeDescriptions) {
+        if (tokens.size() < children.size()) {
+            return null;
+        }
+        boolean matched = true;
+        List<Object> matchedChildren = new ArrayList<>();
+        int matchedTokens = 0;
+        for (int i = 0; i < children.size(); i++) {
+            if (tokens.size() <= matchedTokens) {
+                matched = false;
+                break;
+            }
+            NodeType expected = children.get(i);
+            if (expected.terminal) {
+                if (!tokens.get(matchedTokens).type().equals(expected)) {
+                    matched = false;
+                    break;
+                } else {
+                    matchedChildren.add(tokens.get(i).value());
+                    matchedTokens++;
+                }
+            } else {
+                Node subNode = null;
+                for (NodeDescription nodeDescription : nodeDescriptions.get(expected)) {
+                    Node matchingNode = nodeDescription
+                            .match(tokens.subList(matchedTokens, tokens.size()), nodeDescriptions);
+                    if (matchingNode != null && (subNode == null
+                            || matchingNode.matchedTokens > subNode.matchedTokens)) {
+                        subNode = matchingNode;
+                    }
+                }
+                if (subNode != null) {
+                    matchedChildren.add(subNode);
+                    matchedTokens += subNode.matchedTokens;
+                } else {
+                    matched = false;
+                }
+            }
+        }
+        if (matched) {
+            Node match = new Node(type, matchedTokens);
+            childrenNames.forEach((i, name) -> {
+                if (matchedChildren.get(i - 1) != null) {
+                    match.children.put(name, matchedChildren.get(i - 1));
+                }
+            });
+            return match;
+        } else {
+            return null;
+        }
     }
 }

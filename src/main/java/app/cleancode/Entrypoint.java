@@ -22,6 +22,10 @@ public class Entrypoint {
             System.err.printf("test.vsl:%d: Error: %s\n%s\n", e.line, e.getMessage(),
                     programLines.get(e.line));
             System.exit(1);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            System.err.println("Unexpected error:");
+            System.err.printf("%s: %s\n", e.getClass().getSimpleName(), e.getMessage());
         }
     }
 }

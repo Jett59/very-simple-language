@@ -8,12 +8,16 @@ public class Node {
 
     public final Map<String, Object> children = new HashMap<>();
 
-    public Node(NodeType type) {
+    public final int matchedTokens;
+
+    public Node(NodeType type, int matchedTokens) {
         this.type = type;
+        this.matchedTokens = matchedTokens;
     }
 
     @Override
     public String toString() {
-        return String.format("Node [type=%s, children=%s]", type, children);
+        return String.format("Node [type=%s, children=%s, matchedTokens=%d]", type, children,
+                matchedTokens);
     }
 }
