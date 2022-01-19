@@ -33,7 +33,7 @@ public class ParserDescription {
 
     @Override
     public String toString() {
-        return String.format("ParserDescription [\ntokens=%s,\nrootNode=%s\nnodes=%s]", tokens,
+        return String.format("ParserDescription [\ntokens=%s,\nrootNode=%s,\nnodes=%s]", tokens,
                 rootNode, nodes);
     }
 }

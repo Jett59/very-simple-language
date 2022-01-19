@@ -17,6 +17,10 @@
         {
             "nodeType": "SEMICOLON",
             "pattern": ";"
+        },
+        {
+            "nodeType": "COMMA",
+            "pattern": ","
         }
     ],
     "rootNode": "ASSIGNMENT_EXPRESSION_LIST",
@@ -24,11 +28,34 @@
         {
             "type": "ASSIGNMENT_EXPRESSION",
             "children": [
-                "IDENTIFIER", "EQUALS", "INTEGER"
+                "IDENTIFIER",
+                "EQUALS",
+                "INTEGER"
             ],
             "childrenNames": {
                 "1": "name",
                 "3": "value"
+            }
+        },
+        {
+            "type": "ASSIGNMENT_EXPRESSION_LIST",
+            "children": [
+                "ASSIGNMENT_EXPRESSION"
+            ],
+            "childrenNames": {
+                "1": "expression"
+            }
+        },
+        {
+            "type": "ASSIGNMENT_EXPRESSION_LIST",
+            "children": [
+                "ASSIGNMENT_EXPRESSION_LIST",
+                "COMMA",
+                "ASSIGNMENT_EXPRESSION"
+            ],
+            "childrenNames": {
+                "1": "list",
+                "3": "expression"
             }
         }
     ]
