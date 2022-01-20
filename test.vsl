@@ -1,6 +1,12 @@
-/*This is a comment*/
-macro binaryExpression: name operator {
-  $name: expression $operator expression;
-}
-
-binaryExpression(additionExpression "+");
+MACRO_SPECIFIER: "macro";
+IDENTIFIER: "[a-zA-Z\\$_][a-zA-Z0-9\\$_]*";
+INTEGER: "[0-9]+";
+STRING: "\"(?:[^\\\\\"]+|\\\\.|\\\\\\\\)*\"";
+EQUALS: "=";
+SEMICOLON: ";";
+COLON: ":";
+COMMA: ",";
+LEFT_PAREN: "\\(";
+RIGHT_PAREN: "\\)";
+LEFT_BRACE: "\\{";
+RIGHT_BRACE: "\\}";
