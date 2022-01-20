@@ -1,7 +1,4 @@
 /*This is a comment*/
-macro abc: a b c {
-
-}
-macro cba: c b a {
-
+macro binaryExpression: name operator {
+  $name: expression $operator expression;
 }
