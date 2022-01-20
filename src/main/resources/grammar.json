@@ -223,12 +223,14 @@
             "type": "MACRO_INVOCATION",
             "children": [
                 "IDENTIFIER",
+                "LEFT_PAREN",
                 "SYMBOL_LIST",
+                "RIGHT_PAREN",
                 "SEMICOLON"
             ],
             "childrenNames": {
                 "1": "name",
-                "2": "arguments"
+                "3": "arguments"
             }
         }
     ]
