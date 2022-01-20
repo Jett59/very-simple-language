@@ -8,7 +8,7 @@ public enum NodeType {
     // Non terminal symbols
     PROGRAM(false), PROGRAM_ELEMENT_LIST(false), PROGRAM_ELEMENT(false), MACRO_DEFINITION(
             false), PARAMETER_LIST(false), RULE_LIST(
-                    false), RULE(false), MACRO_INVOKATION(false), SYMBOL_LIST(false), SYMBOL(false);
+                    false), RULE(false), MACRO_INVOCATION(false), SYMBOL_LIST(false), SYMBOL(false);
 
     public final boolean terminal;
 

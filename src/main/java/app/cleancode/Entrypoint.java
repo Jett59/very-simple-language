@@ -8,6 +8,8 @@ import java.util.List;
 import app.cleancode.parser.Node;
 import app.cleancode.parser.ParseException;
 import app.cleancode.parser.Parser;
+import app.cleancode.vsl.ast.AstNode;
+import app.cleancode.vsl.postParse.PostParser;
 
 public class Entrypoint {
     public static void main(String[] args) throws Exception {
@@ -29,6 +31,7 @@ public class Entrypoint {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(parseTree);
+        AstNode ast = PostParser.postParse(parseTree);
+        System.out.println(ast);
     }
 }

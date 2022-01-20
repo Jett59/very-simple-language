@@ -105,7 +105,7 @@
         {
             "type": "PROGRAM_ELEMENT",
             "children": [
-                "MACRO_INVOKATION"
+                "MACRO_INVOCATION"
             ],
             "childrenNames": {
                 "1": "element"
@@ -131,21 +131,21 @@
         {
             "type": "PARAMETER_LIST",
             "children": [
-                "IDENTIFIER",
+                "SYMBOL",
                 "PARAMETER_LIST"
             ],
             "childrenNames": {
-                "1": "parameter",
+                "1": "element",
                 "2": "list"
             }
         },
         {
             "type": "PARAMETER_LIST",
             "children": [
-                "IDENTIFIER"
+                "SYMBOL"
             ],
             "childrenNames": {
-                "1": "parameter"
+                "1": "element"
             }
         },
         {
@@ -155,7 +155,7 @@
                 "RULE_LIST"
             ],
             "childrenNames": {
-                "1": "rule",
+                "1": "element",
                 "2": "list"
             }
         },
@@ -165,7 +165,7 @@
                 "RULE"
             ],
             "childrenNames": {
-                "1": "rule"
+                "1": "element"
             }
         },
         {
@@ -188,7 +188,7 @@
                 "SYMBOL_LIST"
             ],
             "childrenNames": {
-                "1": "symbol",
+                "1": "element",
                 "2": "list"
             }
         },
@@ -198,7 +198,7 @@
                 "SYMBOL"
             ],
             "childrenNames": {
-                "1": "symbol"
+                "1": "element"
             }
         },
         {
@@ -220,7 +220,7 @@
             }
         },
         {
-            "type": "MACRO_INVOKATION",
+            "type": "MACRO_INVOCATION",
             "children": [
                 "IDENTIFIER",
                 "SYMBOL_LIST"
