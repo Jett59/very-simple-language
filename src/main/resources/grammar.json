@@ -16,6 +16,11 @@
             "pattern": "[0-9]+"
         },
         {
+            "valueType": "STRING",
+            "nodeType": "STRING",
+            "pattern": "\"(?:[^\\\\\"]+|\\\\.|\\\\\\\\)*\""
+        },
+        {
             "nodeType": "EQUALS",
             "pattern": "="
         },
@@ -83,6 +88,24 @@
             "type": "PROGRAM_ELEMENT",
             "children": [
                 "MACRO_DEFINITION"
+            ],
+            "childrenNames": {
+                "1": "element"
+            }
+        },
+        {
+            "type": "PROGRAM_ELEMENT",
+            "children": [
+                "RULE"
+            ],
+            "childrenNames": {
+                "1": "element"
+            }
+        },
+        {
+            "type": "PROGRAM_ELEMENT",
+            "children": [
+                "MACRO_INVOKATION"
             ],
             "childrenNames": {
                 "1": "element"
@@ -185,6 +208,26 @@
             ],
             "childrenNames": {
                 "1": "symbol"
+            }
+        },
+        {
+            "type": "SYMBOL",
+            "children": [
+                "STRING"
+            ],
+            "childrenNames": {
+                "1": "string"
+            }
+        },
+        {
+            "type": "MACRO_INVOKATION",
+            "children": [
+                "IDENTIFIER",
+                "SYMBOL_LIST"
+            ],
+            "childrenNames": {
+                "1": "name",
+                "2": "arguments"
             }
         }
     ]
