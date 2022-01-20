@@ -19,7 +19,7 @@ public class RuleNode implements AstNode {
 
     @Override
     public String toString() {
-        return String.format("Rule: '%s' requiring %s", name, components);
+        return String.format("Rule: '%s' composed of %s", name, components);
     }
 
 }

@@ -3,4 +3,4 @@ macro binaryExpression: name operator {
   $name: expression $operator expression;
 }
 
-binaryExpression additionExpression "+"
+binaryExpression additionExpression "+";

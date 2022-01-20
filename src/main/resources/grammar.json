@@ -223,7 +223,8 @@
             "type": "MACRO_INVOCATION",
             "children": [
                 "IDENTIFIER",
-                "SYMBOL_LIST"
+                "SYMBOL_LIST",
+                "SEMICOLON"
             ],
             "childrenNames": {
                 "1": "name",

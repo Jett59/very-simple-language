@@ -9,6 +9,7 @@ import app.cleancode.parser.Node;
 import app.cleancode.parser.ParseException;
 import app.cleancode.parser.Parser;
 import app.cleancode.vsl.ast.AstNode;
+import app.cleancode.vsl.macroExpansion.MacroExpander;
 import app.cleancode.vsl.postParse.PostParser;
 
 public class Entrypoint {
@@ -32,6 +33,7 @@ public class Entrypoint {
             e.printStackTrace();
         }
         AstNode ast = PostParser.postParse(parseTree);
+        ast = MacroExpander.expand(ast);
         System.out.println(ast);
     }
 }
