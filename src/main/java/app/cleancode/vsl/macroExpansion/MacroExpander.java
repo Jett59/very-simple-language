@@ -90,7 +90,8 @@ public class MacroExpander {
                 for (RuleAttribute attribute : rule.attributes) {
                     if (attribute.childName().startsWith("$")) {
                         newAttributes.add(new RuleAttribute(attribute.childNumber(),
-                                symbolTable.get(attribute.childName().substring(1)).identifier()));
+                                symbolTable.get(attribute.childName().substring(1)).identifier(),
+                                attribute.valueType()));
                     } else {
                         newAttributes.add(attribute);
                     }

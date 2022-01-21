@@ -7,6 +7,16 @@
         },
         {
             "valueType": "STRING",
+            "nodeType": "STRING_SPECIFIER",
+            "pattern": "string"
+        },
+        {
+            "valueType": "STRING",
+            "nodeType": "NUMBER_SPECIFIER",
+            "pattern": "number"
+        },
+        {
+            "valueType": "STRING",
             "nodeType": "IDENTIFIER",
             "pattern": "[a-zA-Z\\$_][a-zA-Z0-9\\$_]*"
         },
@@ -228,6 +238,24 @@
             "childrenNames": {
                 "1": "childNumber",
                 "3": "childName"
+            }
+        },
+        {
+            "type": "RULE_ATTRIBUTE",
+            "children": [
+                "STRING_SPECIFIER"
+            ],
+            "childrenNames": {
+                "1": "valueType"
+            }
+        },
+        {
+            "type": "RULE_ATTRIBUTE",
+            "children": [
+                "NUMBER_SPECIFIER"
+            ],
+            "childrenNames": {
+                "1": "valueType"
             }
         },
         {

@@ -3,6 +3,7 @@ package app.cleancode.vsl.postParse;
 import java.util.ArrayList;
 import java.util.List;
 import app.cleancode.parser.Node;
+import app.cleancode.parser.TokenDescription.ValueType;
 import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.MacroDefinitionNode;
 import app.cleancode.vsl.ast.MacroInvocationNode;
@@ -36,8 +37,13 @@ public class PostParser {
                                         .map(subNode -> (RuleAttribute) subNode).toList());
             }
             case RULE_ATTRIBUTE: {
-                return new RuleAttribute(((Number) node.children.get("childNumber")).intValue(),
-                        (String) node.children.get("childName"));
+                if (node.children.containsKey("childNumber")) {
+                    return new RuleAttribute(((Number) node.children.get("childNumber")).intValue(),
+                            (String) node.children.get("childName"), null);
+                } else {
+                    return new RuleAttribute(0, null, ValueType
+                            .valueOf(((String) node.children.get("valueType")).toUpperCase()));
+                }
             }
             case SYMBOL: {
                 return new Symbol((String) node.children.get("symbol"),

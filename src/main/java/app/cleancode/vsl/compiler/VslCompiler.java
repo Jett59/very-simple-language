@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import app.cleancode.parser.TokenDescription.ValueType;
 import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.ProgramNode;
 import app.cleancode.vsl.ast.RuleAttribute;
@@ -23,7 +24,14 @@ public class VslCompiler {
                     RuleNode rule = (RuleNode) node;
                     nodeTypes.add(rule.name);
                     if (rule.components.size() == 1 && rule.components.get(0).hasString()) {
-                        tokenRules.add(new TokenRule(rule.name, rule.components.get(0).string()));
+                        ValueType valueType = ValueType.NONE;
+                        for (RuleAttribute attribute : rule.attributes) {
+                            if (attribute.valueType() != null) {
+                                valueType = attribute.valueType();
+                            }
+                        }
+                        tokenRules.add(new TokenRule(rule.name, rule.components.get(0).string(),
+                                valueType));
                     } else {
                         List<String> components = new ArrayList<>();
                         for (Symbol symbol : rule.components) {
@@ -33,7 +41,8 @@ public class VslCompiler {
                                 String nodeType = getUniqueName(symbol.string());
                                 if (!nodeTypes.contains(nodeType)) {
                                     nodeTypes.add(nodeType);
-                                    tokenRules.add(new TokenRule(nodeType, symbol.string()));
+                                    tokenRules.add(new TokenRule(nodeType, symbol.string(),
+                                            ValueType.NONE));
                                 }
                                 components.add(nodeType);
                             }
