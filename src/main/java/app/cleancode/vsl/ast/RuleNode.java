@@ -6,10 +6,12 @@ import app.cleancode.parser.NodeType;
 public class RuleNode implements AstNode {
     public final String name;
     public final List<Symbol> components;
+    public final List<RuleAttribute> attributes;
 
-    public RuleNode(String name, List<Symbol> components) {
+    public RuleNode(String name, List<Symbol> components, List<RuleAttribute> attributes) {
         this.name = name;
         this.components = List.copyOf(components);
+        this.attributes = List.copyOf(attributes);
     }
 
     @Override
@@ -19,7 +21,8 @@ public class RuleNode implements AstNode {
 
     @Override
     public String toString() {
-        return String.format("Rule: '%s' composed of %s", name, components);
+        return String.format("Rule: '%s' composed of %s with attributes %s", name, components,
+                attributes);
     }
 
 }

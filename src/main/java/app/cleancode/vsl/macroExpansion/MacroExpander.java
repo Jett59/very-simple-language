@@ -12,6 +12,7 @@ import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.MacroDefinitionNode;
 import app.cleancode.vsl.ast.MacroInvocationNode;
 import app.cleancode.vsl.ast.ProgramNode;
+import app.cleancode.vsl.ast.RuleAttribute;
 import app.cleancode.vsl.ast.RuleNode;
 import app.cleancode.vsl.ast.Symbol;
 
@@ -73,6 +74,7 @@ public class MacroExpander {
                 RuleNode rule = (RuleNode) node;
                 String newName;
                 List<Symbol> newComponents = new ArrayList<>();
+                List<RuleAttribute> newAttributes = new ArrayList<>();
                 if (rule.name.startsWith("$")) {
                     newName = symbolTable.get(rule.name.substring(1)).identifier();
                 } else {
@@ -85,7 +87,15 @@ public class MacroExpander {
                         newComponents.add(symbol);
                     }
                 }
-                return new RuleNode(newName, newComponents);
+                for (RuleAttribute attribute : rule.attributes) {
+                    if (attribute.childName().startsWith("$")) {
+                        newAttributes.add(new RuleAttribute(attribute.childNumber(),
+                                symbolTable.get(attribute.childName().substring(1)).identifier()));
+                    } else {
+                        newAttributes.add(attribute);
+                    }
+                }
+                return new RuleNode(newName, newComponents, newAttributes);
             }
             case MACRO_INVOCATION: {
                 MacroInvocationNode invocation = (MacroInvocationNode) node;

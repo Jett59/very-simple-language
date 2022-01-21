@@ -7,6 +7,7 @@ import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.MacroDefinitionNode;
 import app.cleancode.vsl.ast.MacroInvocationNode;
 import app.cleancode.vsl.ast.ProgramNode;
+import app.cleancode.vsl.ast.RuleAttribute;
 import app.cleancode.vsl.ast.RuleNode;
 import app.cleancode.vsl.ast.Symbol;
 
@@ -29,7 +30,14 @@ public class PostParser {
             case RULE: {
                 return new RuleNode((String) node.children.get("symbol"),
                         postParseList((Node) node.children.get("components")).stream()
-                                .map(subNode -> (Symbol) subNode).toList());
+                                .map(subNode -> (Symbol) subNode).toList(),
+                        !node.children.containsKey("attributes") ? List.of()
+                                : postParseList((Node) node.children.get("attributes")).stream()
+                                        .map(subNode -> (RuleAttribute) subNode).toList());
+            }
+            case RULE_ATTRIBUTE: {
+                return new RuleAttribute(((Number) node.children.get("childNumber")).intValue(),
+                        (String) node.children.get("childName"));
             }
             case SYMBOL: {
                 return new Symbol((String) node.children.get("symbol"),

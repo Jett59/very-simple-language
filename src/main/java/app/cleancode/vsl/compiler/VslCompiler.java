@@ -1,11 +1,14 @@
 package app.cleancode.vsl.compiler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.ProgramNode;
+import app.cleancode.vsl.ast.RuleAttribute;
 import app.cleancode.vsl.ast.RuleNode;
 import app.cleancode.vsl.ast.Symbol;
 
@@ -35,7 +38,13 @@ public class VslCompiler {
                                 components.add(nodeType);
                             }
                         }
-                        rules.add(new Rule(rule.name, components));
+                        Map<Integer, String> childNames = new HashMap<>();
+                        for (RuleAttribute attribute : rule.attributes) {
+                            if (attribute.childNumber() > 0) {
+                                childNames.put(attribute.childNumber(), attribute.childName());
+                            }
+                        }
+                        rules.add(new Rule(rule.name, components, childNames));
                     }
                     break;
                 }
