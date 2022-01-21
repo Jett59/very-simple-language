@@ -7,8 +7,9 @@ public enum NodeType {
                     true), LEFT_PAREN(true), RIGHT_PAREN(true), LEFT_BRACE(true), RIGHT_BRACE(true),
     // Non terminal symbols
     PROGRAM(false), PROGRAM_ELEMENT_LIST(false), PROGRAM_ELEMENT(false), MACRO_DEFINITION(
-            false), PARAMETER_LIST(false), RULE_LIST(
-                    false), RULE(false), MACRO_INVOCATION(false), SYMBOL_LIST(false), SYMBOL(false);
+            false), PARAMETER_LIST(false), RULE_LIST(false), RULE(false), MACRO_INVOCATION(
+                    false), SYMBOL_LIST(false), SYMBOL(
+                            false), RULE_ATTRIBUTE_LIST(false), RULE_ATTRIBUTE(false);
 
     public final boolean terminal;
 

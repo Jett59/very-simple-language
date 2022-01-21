@@ -174,11 +174,60 @@
                 "IDENTIFIER",
                 "COLON",
                 "SYMBOL_LIST",
+                "COLON",
+                "RULE_ATTRIBUTE_LIST",
+                "SEMICOLON"
+            ],
+            "childrenNames": {
+                "1": "symbol",
+                "3": "components",
+                "5": "attributes"
+            }
+        },
+        {
+            "type": "RULE",
+            "children": [
+                "IDENTIFIER",
+                "COLON",
+                "SYMBOL_LIST",
                 "SEMICOLON"
             ],
             "childrenNames": {
                 "1": "symbol",
                 "3": "components"
+            }
+        },
+        {
+            "type": "RULE_ATTRIBUTE_LIST",
+            "children": [
+                "RULE_ATTRIBUTE",
+                "COMMA",
+                "RULE_ATTRIBUTE_LIST"
+            ],
+            "childrenNames": {
+                "1": "element",
+                "3": "list"
+            }
+        },
+        {
+            "type": "RULE_ATTRIBUTE_LIST",
+            "children": [
+                "RULE_ATTRIBUTE"
+            ],
+            "childrenNames": {
+                "1": "element"
+            }
+        },
+        {
+            "type": "RULE_ATTRIBUTE",
+            "children": [
+                "INTEGER",
+                "EQUALS",
+                "IDENTIFIER"
+            ],
+            "childrenNames": {
+                "1": "childNumber",
+                "3": "childName"
             }
         },
         {

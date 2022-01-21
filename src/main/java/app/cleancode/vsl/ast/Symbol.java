@@ -14,4 +14,12 @@ public record Symbol(String identifier, String string) implements AstNode {
         return identifier == null ? string : identifier;
     }
 
+    public boolean hasIdentifier() {
+        return identifier != null;
+    }
+
+    public boolean hasString() {
+        return string != null;
+    }
+
 }

@@ -9,6 +9,9 @@ import app.cleancode.parser.Node;
 import app.cleancode.parser.ParseException;
 import app.cleancode.parser.Parser;
 import app.cleancode.vsl.ast.AstNode;
+import app.cleancode.vsl.ast.ProgramNode;
+import app.cleancode.vsl.compiler.CompileResult;
+import app.cleancode.vsl.compiler.VslCompiler;
 import app.cleancode.vsl.macroExpansion.MacroExpander;
 import app.cleancode.vsl.postParse.PostParser;
 
@@ -34,6 +37,7 @@ public class Entrypoint {
         }
         AstNode ast = PostParser.postParse(parseTree);
         ast = MacroExpander.expand(ast);
-        System.out.println(ast);
+        CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
+        System.out.println(compileResult);
     }
 }
