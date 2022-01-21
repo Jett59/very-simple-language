@@ -15,14 +15,13 @@ import app.cleancode.vsl.ast.Symbol;
 
 public class VslCompiler {
     public static CompileResult compile(ProgramNode program) {
-        Set<String> nodeTypes = new HashSet<>();
+        Set<NodeType> nodeTypes = new HashSet<>();
         List<TokenRule> tokenRules = new ArrayList<>();
         List<Rule> rules = new ArrayList<>();
         for (AstNode node : program.children) {
             switch (node.getType()) {
                 case RULE: {
                     RuleNode rule = (RuleNode) node;
-                    nodeTypes.add(rule.name);
                     if (rule.components.size() == 1 && rule.components.get(0).hasString()) {
                         ValueType valueType = ValueType.NONE;
                         for (RuleAttribute attribute : rule.attributes) {
@@ -30,6 +29,7 @@ public class VslCompiler {
                                 valueType = attribute.valueType();
                             }
                         }
+                        nodeTypes.add(new NodeType(rule.name, true));
                         tokenRules.add(new TokenRule(rule.name, rule.components.get(0).string(),
                                 valueType));
                     } else {
@@ -38,13 +38,14 @@ public class VslCompiler {
                             if (symbol.hasIdentifier()) {
                                 components.add(symbol.identifier());
                             } else {
-                                String nodeType = getUniqueName(symbol.string());
+                                String nodeTypeName = getUniqueName(symbol.string());
+                                NodeType nodeType = new NodeType(nodeTypeName, true);
                                 if (!nodeTypes.contains(nodeType)) {
                                     nodeTypes.add(nodeType);
-                                    tokenRules.add(new TokenRule(nodeType, symbol.string(),
+                                    tokenRules.add(new TokenRule(nodeTypeName, symbol.string(),
                                             ValueType.NONE));
                                 }
-                                components.add(nodeType);
+                                components.add(nodeTypeName);
                             }
                         }
                         Map<Integer, String> childNames = new HashMap<>();
@@ -53,6 +54,7 @@ public class VslCompiler {
                                 childNames.put(attribute.childNumber(), attribute.childName());
                             }
                         }
+                        nodeTypes.add(new NodeType(rule.name, false));
                         rules.add(new Rule(rule.name, components, childNames));
                     }
                     break;
