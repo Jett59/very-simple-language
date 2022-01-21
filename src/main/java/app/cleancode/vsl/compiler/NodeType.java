@@ -20,4 +20,8 @@ public record NodeType(String name, boolean terminal) {
         return name.hashCode();
     }
 
+    public String toString() {
+        return String.format("%s(%b)", name, terminal);
+    }
+
 }

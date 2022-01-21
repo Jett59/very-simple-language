@@ -39,5 +39,6 @@ public class Entrypoint {
         ast = MacroExpander.expand(ast);
         CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
         System.out.println(compileResult);
+        System.out.println(compileResult.getEnumSource());
     }
 }
