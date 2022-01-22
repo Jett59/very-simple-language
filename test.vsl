@@ -1,21 +1,42 @@
 whitespace: "(\\s|\n|\t|(/\\*.*?\\*/))+";
 
-MACRO_SPECIFIER: "macro";
+STRING_SPECIFIER: "string": string;
+NUMBER_SPECIFIER: "number": string;
+
 IDENTIFIER: "[a-zA-Z\\$_][a-zA-Z0-9\\$_]*": string;
 INTEGER: "[0-9]+": number;
 STRING: "\"(?:[^\\\\\"]+|\\\\.|\\\\\\\\)*\"": string;
-EQUALS: "=";
-SEMICOLON: ";";
-COLON: ":";
-COMMA: ",";
-LEFT_PAREN: "\\(";
-RIGHT_PAREN: "\\)";
-LEFT_BRACE: "\\{";
-RIGHT_BRACE: "\\}";
 
-PROGRAM: PROGRAM_ELEMENT_LIST: 1=elements;
+root: PROGRAM_ELEMENT_LIST: 1=elements;
 
 PROGRAM_ELEMENT_LIST: PROGRAM_ELEMENT: 1=element;
 PROGRAM_ELEMENT_LIST: PROGRAM_ELEMENT PROGRAM_ELEMENT_LIST: 1=element, 2=list;
 
-PROGRAM_ELEMENT: "-->" SEMICOLON;
+PROGRAM_ELEMENT: MACRO_DEFINITION: 1=element;
+PROGRAM_ELEMENT: RULE: 1=element;
+PROGRAM_ELEMENT: MACRO_INVOCATION: 1=element;
+
+MACRO_DEFINITION: "macro" IDENTIFIER ":" PARAMETER_LIST "{" RULE_LIST "}": 2=name, 4=parameters, 6=body;
+
+PARAMETER_LIST: SYMBOL PARAMETER_LIST: 1=element, 2=list;
+PARAMETER_LIST: SYMBOL: 1=element;
+
+SYMBOL: IDENTIFIER: 1=symbol;
+SYMBOL: STRING: 1=string;
+
+RULE_LIST: RULE RULE_LIST: 1=element, 2=list;
+
+RULE: IDENTIFIER ":" SYMBOL_LIST ":" RULE_ATTRIBUTE_LIST ";": 1=symbol, 3=components, 5=attributes;
+RULE: IDENTIFIER ":" SYMBOL_LIST ";": 1=symbol, 3=components;
+
+SYMBOL_LIST: SYMBOL SYMBOL_LIST: 1=element, 2=list;
+SYMBOL_LIST: SYMBOL: 1=element;
+
+RULE_ATTRIBUTE_LIST: RULE_ATTRIBUTE RULE_ATTRIBUTE_LIST: 1=element, 2=list;
+RULE_ATTRIBUTE_LIST: RULE_ATTRIBUTE: 1=element;
+
+RULE_ATTRIBUTE: INTEGER "=" IDENTIFIER: 1=childNumber, 3=childName;
+RULE_ATTRIBUTE: STRING_SPECIFIER: 1=valueType;
+RULE_ATTRIBUTE: NUMBER_SPECIFIER: 1=valueType;
+
+MACRO_INVOCATION: IDENTIFIER "(" SYMBOL_LIST ")" ";": 1=name, 3=arguments;
