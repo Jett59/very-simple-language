@@ -45,6 +45,7 @@ public class Parser {
                 }
             }
             if (match == null) {
+                System.out.println(temp);
                 int line = (int) program.substring(0, program.indexOf(temp)).lines().count();
                 throw new ParseException(line, "Unknown token");
             } else {
@@ -68,6 +69,7 @@ public class Parser {
         if (result == null) {
             throw new ParseException(0, "Failed to parse program");
         } else if (result.matchedTokens < programTokens.size()) {
+            System.out.println(result);
             throw new ParseException((int) program.lines().count() - 1,
                     "Trailing tokens at end of file");
         }

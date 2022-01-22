@@ -47,7 +47,7 @@ public class PostParser {
             }
             case SYMBOL: {
                 return new Symbol((String) node.children.get("symbol"),
-                        (String) node.children.get("string"));
+                        (String) node.children.get("String"));
             }
             case MACRO_INVOCATION: {
                 return new MacroInvocationNode((String) node.children.get("name"),
