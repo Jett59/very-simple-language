@@ -104,8 +104,8 @@
 "PROGRAM_ELEMENT_LIST"
 ],
 "childrenNames": {
-"1": "element",
-"2": "list"
+"2": "list",
+"1": "element"
 }
 },
 {
@@ -147,9 +147,9 @@
 "UNNAMED225c5c7d22"
 ],
 "childrenNames": {
-"2": "name",
 "4": "parameters",
-"6": "body"
+"6": "body",
+"2": "name"
 }
 },
 {
@@ -159,8 +159,8 @@
 "PARAMETER_LIST"
 ],
 "childrenNames": {
-"1": "element",
-"2": "list"
+"2": "list",
+"1": "element"
 }
 },
 {
@@ -197,8 +197,8 @@
 "RULE_LIST"
 ],
 "childrenNames": {
-"1": "element",
-"2": "list"
+"2": "list",
+"1": "element"
 }
 },
 {
@@ -221,9 +221,9 @@
 "UNNAMED223b22"
 ],
 "childrenNames": {
-"1": "symbol",
 "3": "components",
-"5": "attributes"
+"5": "attributes",
+"1": "symbol"
 }
 },
 {
@@ -235,8 +235,8 @@
 "UNNAMED223b22"
 ],
 "childrenNames": {
-"1": "symbol",
-"3": "components"
+"3": "components",
+"1": "symbol"
 }
 },
 {
@@ -246,8 +246,8 @@
 "SYMBOL_LIST"
 ],
 "childrenNames": {
-"1": "element",
-"2": "list"
+"2": "list",
+"1": "element"
 }
 },
 {
@@ -267,8 +267,8 @@
 "RULE_ATTRIBUTE_LIST"
 ],
 "childrenNames": {
-"1": "element",
-"3": "list"
+"3": "list",
+"1": "element"
 }
 },
 {
@@ -288,8 +288,8 @@
 "IDENTIFIER"
 ],
 "childrenNames": {
-"1": "childNumber",
-"3": "childName"
+"3": "childName",
+"1": "childNumber"
 }
 },
 {
@@ -320,8 +320,8 @@
 "UNNAMED223b22"
 ],
 "childrenNames": {
-"1": "name",
-"3": "arguments"
+"3": "arguments",
+"1": "name"
 }
 }
 ]
