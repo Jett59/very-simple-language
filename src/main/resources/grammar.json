@@ -63,10 +63,10 @@
             "pattern": "\\}"
         }
     ],
-    "rootNode": "PROGRAM",
+    "rootNode": "root",
     "nodes": [
         {
-            "type": "PROGRAM",
+            "type": "root",
             "children": [
                 "PROGRAM_ELEMENT_LIST"
             ],
