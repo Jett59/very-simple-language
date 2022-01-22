@@ -19,7 +19,7 @@ import app.cleancode.vsl.postParse.PostParser;
 
 public class Entrypoint {
     public static void main(String[] args) throws Exception {
-        String inputFileName = "test.vsl";
+        String inputFileName = "grammar.vsl";
         Parser parser;
         try (InputStream inputStream = Entrypoint.class.getResourceAsStream("/grammar.json");
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream)) {
