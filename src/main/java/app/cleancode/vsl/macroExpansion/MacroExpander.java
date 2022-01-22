@@ -18,7 +18,7 @@ import app.cleancode.vsl.ast.Symbol;
 
 public class MacroExpander {
     public static AstNode expand(AstNode node) throws ParseException {
-        if (!node.getType().equals(NodeType.PROGRAM)) {
+        if (!node.getType().equals(NodeType.root)) {
             throw new IllegalArgumentException("Node must be a PROGRAM, not a " + node.getType());
         } else {
             Map<String, MacroDefinitionNode> macros = new HashMap<>();

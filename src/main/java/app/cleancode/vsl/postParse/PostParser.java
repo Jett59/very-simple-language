@@ -15,7 +15,7 @@ import app.cleancode.vsl.ast.Symbol;
 public class PostParser {
     public static AstNode postParse(Node node) throws PostParseException {
         switch (node.type) {
-            case PROGRAM: {
+            case root: {
                 return new ProgramNode(postParseList((Node) node.children.get("elements")));
             }
             case PROGRAM_ELEMENT: {

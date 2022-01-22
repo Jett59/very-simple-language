@@ -27,7 +27,7 @@ public class CompileResult {
 
     public String getEnumSource() {
         return String.format(
-                "package app.cleancode.parser;\n\npublic enum NodeType {\n%s;\nprivate boolean terminal;\n\nprivate NodeType(boolean terminal) {\nthis.terminal = terminal;\n}\n}",
+                "package app.cleancode.parser;\n\npublic enum NodeType {\n%s;\npublic boolean terminal;\n\nprivate NodeType(boolean terminal) {\nthis.terminal = terminal;\n}\n}",
                 String.join(", ", nodeTypes.stream().map(NodeType::toString).sorted().toList()));
     }
 

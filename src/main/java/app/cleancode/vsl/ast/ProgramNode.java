@@ -12,7 +12,7 @@ public class ProgramNode implements AstNode {
 
     @Override
     public NodeType getType() {
-        return NodeType.PROGRAM;
+        return NodeType.root;
     }
 
     @Override
