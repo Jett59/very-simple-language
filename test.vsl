@@ -1,3 +1,5 @@
+whitespace: "(\\s|\n|\t|(/\\*.*?\\*/))+";
+
 MACRO_SPECIFIER: "macro";
 IDENTIFIER: "[a-zA-Z\\$_][a-zA-Z0-9\\$_]*": string;
 INTEGER: "[0-9]+": number;

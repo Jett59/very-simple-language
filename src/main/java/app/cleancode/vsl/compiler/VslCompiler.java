@@ -25,8 +25,8 @@ public class VslCompiler {
                     RuleNode rule = (RuleNode) node;
                     if (rule.components.size() == 1 && rule.components.get(0).hasString()) {
                         String pattern = rule.components.get(0).string();
-                        if (pattern.equals("whitespace")) {
-                            whitespacePattern = pattern;
+                        if (rule.name.equals("whitespace")) {
+                            whitespacePattern = pattern.substring(1, pattern.length() - 1);
                         }
                         ValueType valueType = ValueType.NONE;
                         for (RuleAttribute attribute : rule.attributes) {
