@@ -13,7 +13,9 @@ import app.cleancode.parser.Parser;
 import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.ProgramNode;
 import app.cleancode.vsl.compiler.CompileResult;
+import app.cleancode.vsl.compiler.Rule;
 import app.cleancode.vsl.compiler.VslCompiler;
+import app.cleancode.vsl.generator.Generator;
 import app.cleancode.vsl.macroExpansion.MacroExpander;
 import app.cleancode.vsl.postParse.PostParser;
 
@@ -41,6 +43,9 @@ public class Entrypoint {
         AstNode ast = PostParser.postParse(parseTree);
         ast = MacroExpander.expand(ast);
         CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
+        for (Rule rule : compileResult.rules) {
+            System.out.println(Generator.generateRuleMethod(rule, compileResult.nodeTypes));
+        }
         // Remove file extension from input file and add 'target/' to the beginning
         String outputDirectory =
                 Paths.get("target", inputFileName.substring(0, inputFileName.lastIndexOf('.')))
