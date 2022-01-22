@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 import app.cleancode.parser.Node;
 import app.cleancode.parser.ParseException;
 import app.cleancode.parser.Parser;
@@ -43,9 +44,11 @@ public class Entrypoint {
         AstNode ast = PostParser.postParse(parseTree);
         ast = MacroExpander.expand(ast);
         CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
-        for (Rule rule : compileResult.rules) {
-            System.out.println(Generator.generateRuleMethod(rule, compileResult.nodeTypes));
-        }
+        compileResult.rules.stream().collect(Collectors.groupingBy(Rule::type))
+                .forEach((name, alternatives) -> {
+                    System.out.println(Generator.generateRuleMethod(name, alternatives,
+                            compileResult.nodeTypes));
+                });
         // Remove file extension from input file and add 'target/' to the beginning
         String outputDirectory =
                 Paths.get("target", inputFileName.substring(0, inputFileName.lastIndexOf('.')))

@@ -1,5 +1,6 @@
 package app.cleancode.vsl.generator;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import app.cleancode.vsl.compiler.NodeType;
@@ -29,11 +30,11 @@ public class Generator {
         return result.toString();
     }
 
-    public static String generateRuleMethod(Rule rule, Set<NodeType> nodeTypes) {
+    private static String generateRuleMethod(int optionNumber, Rule rule, Set<NodeType> nodeTypes) {
         StringBuilder result = new StringBuilder();
         result.append(String.format(
-                "public Node parse%s(List<Token> tokens, LocationCounter locationCounter) {\n",
-                rule.type()));
+                "public Node parse%s%d(List<Token> tokens, LocationCounter locationCounter) {\n",
+                rule.type(), optionNumber));
         for (int i = 0; i < rule.tokens().size(); i++) {
             NodeType tokenType = getNodeType(rule.tokens().get(i), nodeTypes);
             result.append(generateNodeCheck(i, tokenType.name(), tokenType.terminal(),
@@ -46,6 +47,31 @@ public class Generator {
         });
         result.append("return result;\n");
         result.append("}");
+        return result.toString();
+    }
+
+    public static String generateRuleMethod(String ruleName, List<Rule> ruleAlternatives,
+            Set<NodeType> nodeTypes) {
+        StringBuilder result = new StringBuilder();
+        result.append(String.format(
+                "public Node parse%s(List<Token> tokens, LocationCounter locationCounter) {\n",
+                ruleName));
+        result.append("final int oldLocationCounter = locationCounter.location;\n");
+        result.append("Node result;\n");
+        for (int i = 0; i < ruleAlternatives.size(); i++) {
+            result.append(String.format(
+                    "if ((result = parse%s%d(tokens, locationCounter) == null) {\n", ruleName, i));
+            result.append("locationCounter.location = oldLocationCounter;\n");
+            result.append("}else {\n");
+            result.append("return result;\n");
+            result.append("}\n");
+        }
+        result.append("return null;\n");
+        result.append("}\n");
+        for (int i = 0; i < ruleAlternatives.size(); i++) {
+            result.append(generateRuleMethod(i, ruleAlternatives.get(i), nodeTypes));
+            result.append('\n');
+        }
         return result.toString();
     }
 
