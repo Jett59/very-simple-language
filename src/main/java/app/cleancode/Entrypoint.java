@@ -40,5 +40,6 @@ public class Entrypoint {
         CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
         System.out.println(compileResult);
         System.out.println(compileResult.getEnumSource());
+        System.out.println(compileResult.getJsonSource());
     }
 }

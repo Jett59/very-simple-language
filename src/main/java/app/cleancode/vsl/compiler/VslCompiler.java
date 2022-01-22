@@ -16,6 +16,7 @@ import app.cleancode.vsl.ast.Symbol;
 public class VslCompiler {
     public static CompileResult compile(ProgramNode program) {
         Set<NodeType> nodeTypes = new HashSet<>();
+        String whitespacePattern = "[\\\\s\\t\\n]+";
         List<TokenRule> tokenRules = new ArrayList<>();
         List<Rule> rules = new ArrayList<>();
         for (AstNode node : program.children) {
@@ -23,6 +24,10 @@ public class VslCompiler {
                 case RULE: {
                     RuleNode rule = (RuleNode) node;
                     if (rule.components.size() == 1 && rule.components.get(0).hasString()) {
+                        String pattern = rule.components.get(0).string();
+                        if (pattern.equals("whitespace")) {
+                            whitespacePattern = pattern;
+                        }
                         ValueType valueType = ValueType.NONE;
                         for (RuleAttribute attribute : rule.attributes) {
                             if (attribute.valueType() != null) {
@@ -30,8 +35,7 @@ public class VslCompiler {
                             }
                         }
                         nodeTypes.add(new NodeType(rule.name, true));
-                        tokenRules.add(new TokenRule(rule.name, rule.components.get(0).string(),
-                                valueType));
+                        tokenRules.add(new TokenRule(rule.name, pattern, valueType));
                     } else {
                         List<String> components = new ArrayList<>();
                         for (Symbol symbol : rule.components) {
@@ -63,7 +67,7 @@ public class VslCompiler {
                     throw new RuntimeException("Unknown node type " + node.getType());
             }
         }
-        return new CompileResult(nodeTypes, tokenRules, rules);
+        return new CompileResult(nodeTypes, whitespacePattern, tokenRules, "root", rules);
     }
 
     private static String getUniqueName(String symbolString) {
