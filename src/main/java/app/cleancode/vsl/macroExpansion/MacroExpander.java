@@ -51,7 +51,7 @@ public class MacroExpander {
             if (expansions > 0) {
                 return expand(newNode);
             } else {
-                return node;
+                return newNode;
             }
         }
     }
