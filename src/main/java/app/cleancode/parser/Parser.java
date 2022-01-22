@@ -45,7 +45,6 @@ public class Parser {
                 }
             }
             if (match == null) {
-                System.out.println(temp);
                 int line = (int) program.substring(0, program.indexOf(temp)).lines().count();
                 throw new ParseException(line, "Unknown token");
             } else {

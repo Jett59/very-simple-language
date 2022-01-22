@@ -46,7 +46,7 @@ public class VslCompiler {
                                 NodeType nodeType = new NodeType(nodeTypeName, true);
                                 if (!nodeTypes.contains(nodeType)) {
                                     nodeTypes.add(nodeType);
-                                    tokenRules.add(new TokenRule(nodeTypeName, symbol.string(),
+                                    tokenRules.add(0, new TokenRule(nodeTypeName, symbol.string(),
                                             ValueType.NONE));
                                 }
                                 components.add(nodeTypeName);
