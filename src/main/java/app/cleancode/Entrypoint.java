@@ -1,7 +1,9 @@
 package app.cleancode;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -17,12 +19,13 @@ import app.cleancode.vsl.postParse.PostParser;
 
 public class Entrypoint {
     public static void main(String[] args) throws Exception {
+        String inputFileName = "test.vsl";
         Parser parser;
         try (InputStream inputStream = Entrypoint.class.getResourceAsStream("/grammar.json");
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream)) {
             parser = new Parser(new String(bufferedInputStream.readAllBytes()));
         }
-        List<String> programLines = Files.readAllLines(Paths.get("test.vsl"));
+        List<String> programLines = Files.readAllLines(Paths.get(inputFileName));
         Node parseTree = null;
         try {
             parseTree = parser.parse(String.join("\n", programLines));
@@ -38,8 +41,18 @@ public class Entrypoint {
         AstNode ast = PostParser.postParse(parseTree);
         ast = MacroExpander.expand(ast);
         CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
-        System.out.println(compileResult);
-        System.out.println(compileResult.getEnumSource());
-        System.out.println(compileResult.getJsonSource());
+        // Remove file extension from input file and add 'target/' to the beginning
+        String outputDirectory =
+                Paths.get("target", inputFileName.substring(0, inputFileName.lastIndexOf('.')))
+                        .toString();
+        try {
+            new File(outputDirectory).mkdirs();
+            Files.write(Paths.get(outputDirectory, "NodeType.java"),
+                    compileResult.getEnumSource().getBytes(StandardCharsets.UTF_8));
+            Files.write(Paths.get(outputDirectory, "grammar.json"),
+                    compileResult.getJsonSource().getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to write output files", e);
+        }
     }
 }
