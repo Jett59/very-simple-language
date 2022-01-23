@@ -1,7 +1,7 @@
 package app.cleancode.vsl.ast;
 
 import java.util.List;
-import app.cleancode.parser.NodeType;
+import app.cleancode.parser.Parser.NodeType;
 
 public class MacroDefinitionNode implements AstNode {
     public final String name;

@@ -1,6 +1,6 @@
 package app.cleancode.vsl.ast;
 
-import app.cleancode.parser.NodeType;
+import app.cleancode.parser.Parser.NodeType;
 
 public record Symbol(String identifier, String string) implements AstNode {
 

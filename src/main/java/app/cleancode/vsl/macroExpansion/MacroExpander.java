@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import app.cleancode.parser.NodeType;
-import app.cleancode.parser.ParseException;
+import app.cleancode.parser.Parser.NodeType;
 import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.MacroDefinitionNode;
 import app.cleancode.vsl.ast.MacroInvocationNode;
@@ -17,7 +16,7 @@ import app.cleancode.vsl.ast.RuleNode;
 import app.cleancode.vsl.ast.Symbol;
 
 public class MacroExpander {
-    public static AstNode expand(AstNode node) throws ParseException {
+    public static AstNode expand(AstNode node) {
         if (!node.getType().equals(NodeType.root)) {
             throw new IllegalArgumentException("Node must be a PROGRAM, not a " + node.getType());
         } else {
@@ -34,7 +33,7 @@ public class MacroExpander {
                     case MACRO_INVOCATION: {
                         MacroInvocationNode invocationNode = (MacroInvocationNode) subNode;
                         if (!macros.containsKey(invocationNode.name)) {
-                            throw new ParseException(0,
+                            throw new RuntimeException(
                                     String.format("Macro %s not defined", invocationNode.name));
                         } else {
                             newChildren.addAll(
@@ -57,9 +56,9 @@ public class MacroExpander {
     }
 
     private static List<AstNode> expandMacro(MacroInvocationNode invocation,
-            MacroDefinitionNode definition) throws ParseException {
+            MacroDefinitionNode definition) {
         if (definition.parameters.size() != invocation.arguments.size()) {
-            throw new ParseException(0, "Mismatch of macro parameters");
+            throw new RuntimeException("Mismatch of macro parameters");
         }
         Map<String, Symbol> macroArguments =
                 IntStream.range(0, definition.parameters.size()).boxed().collect(

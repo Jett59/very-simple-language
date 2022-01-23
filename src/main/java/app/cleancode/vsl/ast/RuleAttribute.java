@@ -1,7 +1,6 @@
 package app.cleancode.vsl.ast;
 
-import app.cleancode.parser.NodeType;
-import app.cleancode.parser.TokenDescription.ValueType;
+import app.cleancode.parser.Parser.NodeType;
 
 public record RuleAttribute(int childNumber, String childName, ValueType valueType)
         implements AstNode {

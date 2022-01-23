@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import app.cleancode.parser.TokenDescription.ValueType;
 import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.ProgramNode;
 import app.cleancode.vsl.ast.RuleAttribute;
 import app.cleancode.vsl.ast.RuleNode;
 import app.cleancode.vsl.ast.Symbol;
+import app.cleancode.vsl.ast.ValueType;
 
 public class VslCompiler {
     public static CompileResult compile(ProgramNode program) {

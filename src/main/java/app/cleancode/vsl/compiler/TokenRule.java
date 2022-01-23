@@ -1,6 +1,6 @@
 package app.cleancode.vsl.compiler;
 
-import app.cleancode.parser.TokenDescription.ValueType;
+import app.cleancode.vsl.ast.ValueType;
 
 public record TokenRule(String type, String pattern, ValueType valueType) {
 
