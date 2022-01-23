@@ -62,15 +62,19 @@ public class Generator {
                 ruleName));
         result.append("final int oldLocationCounter = locationCounter.location;\n");
         result.append("Node result;\n");
+        result.append("int matchedTokens = 0;\n");
+        result.append("Node temp;\n");
         for (int i = 0; i < ruleAlternatives.size(); i++) {
             result.append(String.format(
-                    "if ((result = parse%s%d(tokens, locationCounter)) == null) {\n", ruleName, i));
+                    "if ((temp = parse%s%d(tokens, locationCounter)) == null) {\n", ruleName, i));
             result.append("locationCounter.location = oldLocationCounter;\n");
-            result.append("}else {\n");
-            result.append("return result;\n");
+            result.append(
+                    "}else if (matchedTokens < locationCounter.location - oldLocationCounter) {\n");
+            result.append("result = temp;\n");
+            result.append("matchedTokens = locationCounter.location - oldLocationCounter;\n");
             result.append("}\n");
         }
-        result.append("return null;\n");
+        result.append("return result;\n");
         result.append("}\n");
         for (int i = 0; i < ruleAlternatives.size(); i++) {
             result.append(generateRuleMethod(i, ruleAlternatives.get(i), nodeTypes));
@@ -142,6 +146,7 @@ public class Generator {
         }
         result.append("if (matchToken != null) {\n");
         result.append("result.add(matchToken);\n");
+        result.append("temp = temp.substring(matchString.length());\n");
         result.append("}else {\n");
         result.append("throw new IllegalArgumentException(\"Unknown token\");\n");
         result.append("}\n");
