@@ -70,13 +70,13 @@ public class Generator {
         result.append("Node temp;\n");
         for (int i = 0; i < ruleAlternatives.size(); i++) {
             result.append(String.format(
-                    "if ((temp = parse%s%d(tokens, locationCounter)) == null) {\n", ruleName, i));
-            result.append("locationCounter.location = oldLocationCounter;\n");
-            result.append(
-                    "}else if (matchedTokens < locationCounter.location - oldLocationCounter) {\n");
+                    "if ((temp = parse%s%d(tokens, locationCounter)) != null) {\n", ruleName, i));
+            result.append("if (matchedTokens < locationCounter.location - oldLocationCounter) {\n");
             result.append("result = temp;\n");
             result.append("matchedTokens = locationCounter.location - oldLocationCounter;\n");
             result.append("}\n");
+            result.append("}\n");
+            result.append("locationCounter.location = oldLocationCounter;\n");
         }
         result.append("locationCounter.location = oldLocationCounter + matchedTokens;\n");
         result.append("return result;\n");
