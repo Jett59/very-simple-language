@@ -7,14 +7,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import app.cleancode.parser.Node;
 import app.cleancode.parser.ParseException;
 import app.cleancode.parser.Parser;
 import app.cleancode.vsl.ast.AstNode;
 import app.cleancode.vsl.ast.ProgramNode;
 import app.cleancode.vsl.compiler.CompileResult;
-import app.cleancode.vsl.compiler.Rule;
 import app.cleancode.vsl.compiler.VslCompiler;
 import app.cleancode.vsl.generator.Generator;
 import app.cleancode.vsl.macroExpansion.MacroExpander;
@@ -44,13 +43,7 @@ public class Entrypoint {
         AstNode ast = PostParser.postParse(parseTree);
         ast = MacroExpander.expand(ast);
         CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
-        System.out.println(Generator.generateLexMethod(compileResult.tokenRules,
-                compileResult.whitespacePattern));
-        compileResult.rules.stream().collect(Collectors.groupingBy(Rule::type))
-                .forEach((name, alternatives) -> {
-                    System.out.println(Generator.generateRuleMethod(name, alternatives,
-                            compileResult.nodeTypes));
-                });
+        System.out.println(Generator.generateParserClass(compileResult, Optional.empty()));
         // Remove file extension from input file and add 'target/' to the beginning
         String outputDirectory =
                 Paths.get("target", inputFileName.substring(0, inputFileName.lastIndexOf('.')))

@@ -3,7 +3,9 @@ package app.cleancode.vsl.generator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import app.cleancode.parser.TokenDescription.ValueType;
+import app.cleancode.vsl.compiler.CompileResult;
 import app.cleancode.vsl.compiler.NodeType;
 import app.cleancode.vsl.compiler.Rule;
 import app.cleancode.vsl.compiler.TokenRule;
@@ -52,11 +54,11 @@ public class Generator {
         return result.toString();
     }
 
-    public static String generateRuleMethod(String ruleName, List<Rule> ruleAlternatives,
+    private static String generateRuleMethod(String ruleName, List<Rule> ruleAlternatives,
             Set<NodeType> nodeTypes) {
         StringBuilder result = new StringBuilder();
         result.append(String.format(
-                "public Node parse%s(List<Token> tokens, LocationCounter locationCounter) {\n",
+                "private Node parse%s(List<Node> tokens, LocationCounter locationCounter) {\n",
                 ruleName));
         result.append("final int oldLocationCounter = locationCounter.location;\n");
         result.append("Node result;\n");
@@ -118,7 +120,7 @@ public class Generator {
         return result.toString();
     }
 
-    public static String generateLexMethod(List<TokenRule> tokenRules, String whitespacePattern) {
+    private static String generateLexMethod(List<TokenRule> tokenRules, String whitespacePattern) {
         StringBuilder result = new StringBuilder();
         result.append("private List<Node> lex(String input) {\n");
         for (TokenRule token : tokenRules) {
@@ -144,6 +146,33 @@ public class Generator {
         result.append("}\n");
         result.append("}\n");
         result.append("return result;\n");
+        result.append("}\n");
+        return result.toString();
+    }
+
+    public static String generateParserClass(CompileResult compileResult,
+            Optional<String> packageName) {
+        StringBuilder result = new StringBuilder();
+        if (packageName.isPresent()) {
+            result.append(String.format("package %s;\n", packageName.get()));
+        }
+        result.append("import java.util.List;\n");
+        result.append("import java.util.ArrayList;\n");
+        result.append("import java.util.regex.Pattern;\n");
+        result.append("import java.util.regex.Matcher;\n");
+        result.append("public class Parser {\n");
+        result.append("private static class LocationCounter {\n");
+        result.append("int location;\n");
+        result.append("}\n");
+        result.append(generateLexMethod(compileResult.tokenRules, compileResult.whitespacePattern));
+        compileResult.rules.stream().collect(Collectors.groupingBy(Rule::type))
+                .forEach((name, alternatives) -> {
+                    result.append(generateRuleMethod(name, alternatives, compileResult.nodeTypes));
+                });
+        result.append("public Node parse(String input) {\n");
+        result.append(String.format("return parse%s(lex(input), new LocationCounter());\n",
+                compileResult.rootNode));
+        result.append("}\n");
         result.append("}\n");
         return result.toString();
     }
