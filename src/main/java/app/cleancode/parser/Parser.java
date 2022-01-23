@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("unused")
 public class Parser {
     private static class LocationCounter {
         int location = 0;
@@ -306,8 +307,8 @@ public class Parser {
             locationCounter.location++;
         }
         Node result = new Node(NodeType.RULE_ATTRIBUTE);
-        result.children.put("childName", childName);
         result.children.put("childNumber", childNumber);
+        result.children.put("childName", childName);
         return result;
     }
 
@@ -501,8 +502,8 @@ public class Parser {
             locationCounter.location++;
         }
         Node result = new Node(NodeType.MACRO_INVOCATION);
-        result.children.put("arguments", arguments);
         result.children.put("name", name);
+        result.children.put("arguments", arguments);
         return result;
     }
 
@@ -703,9 +704,9 @@ public class Parser {
             locationCounter.location++;
         }
         Node result = new Node(NodeType.RULE);
-        result.children.put("attributes", attributes);
         result.children.put("components", components);
         result.children.put("symbol", symbol);
+        result.children.put("attributes", attributes);
         return result;
     }
 
@@ -736,8 +737,8 @@ public class Parser {
             locationCounter.location++;
         }
         Node result = new Node(NodeType.RULE);
-        result.children.put("components", components);
         result.children.put("symbol", symbol);
+        result.children.put("components", components);
         return result;
     }
 
@@ -803,9 +804,9 @@ public class Parser {
             locationCounter.location++;
         }
         Node result = new Node(NodeType.MACRO_DEFINITION);
+        result.children.put("name", name);
         result.children.put("body", body);
         result.children.put("parameters", parameters);
-        result.children.put("name", name);
         return result;
     }
 
@@ -920,8 +921,8 @@ public class Parser {
             return null;
         }
         Node result = new Node(NodeType.RULE_ATTRIBUTE_LIST);
-        result.children.put("list", list);
         result.children.put("element", element);
+        result.children.put("list", list);
         return result;
     }
 

@@ -182,6 +182,7 @@ public class Generator {
         result.append("import java.util.regex.Matcher;\n");
         result.append("import java.util.Map;\n");
         result.append("import java.util.HashMap;\n");
+        result.append("@SuppressWarnings(\"unused\")\n");
         result.append("public class Parser {\n");
         result.append(locationTypeClass);
         result.append(nodeClass);
