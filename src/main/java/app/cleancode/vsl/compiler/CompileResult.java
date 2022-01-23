@@ -30,12 +30,4 @@ public class CompileResult {
                 "public static enum NodeType {\n%s;\npublic boolean terminal;\n\nprivate NodeType(boolean terminal) {\nthis.terminal = terminal;\n}\n}\n",
                 String.join(", ", nodeTypes.stream().map(NodeType::toString).sorted().toList()));
     }
-
-    public String getJsonSource() {
-        return String.format(
-                "{\n\"whitespacePattern\": \"%s\",\n\"tokens\": [\n%s\n],\n\"rootNode\": \"%s\",\n\"nodes\": [\n%s\n]\n}",
-                whitespacePattern,
-                String.join(",\n", tokenRules.stream().map(TokenRule::toJsonString).toList()),
-                rootNode, String.join(",\n", rules.stream().map(Rule::toJsonString).toList()));
-    }
 }
