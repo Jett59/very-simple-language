@@ -3,8 +3,10 @@ package app.cleancode.vsl.generator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import app.cleancode.parser.TokenDescription.ValueType;
 import app.cleancode.vsl.compiler.NodeType;
 import app.cleancode.vsl.compiler.Rule;
+import app.cleancode.vsl.compiler.TokenRule;
 
 public class Generator {
     private static String generateNodeCheck(int nodeNumber, String nodeType, boolean terminal,
@@ -82,5 +84,67 @@ public class Generator {
             }
         }
         return null;
+    }
+
+    private static String generateTokenCheck(String tokenName, ValueType valueType) {
+        StringBuilder result = new StringBuilder();
+        result.append(String.format("Matcher %sMatcher = %sPattern.matcher(temp);\n", tokenName,
+                tokenName));
+        result.append(String.format("if (%sMatcher.find() && %sMatcher.start() == 0) {\n",
+                tokenName, tokenName));
+        result.append(String.format("String newMatchString = %sMatcher.group();\n", tokenName));
+        result.append(
+                "if (matchString == null || matchString.length() < newMatchString.length()) {\n");
+        switch (valueType) {
+            case NONE: {
+                result.append(String.format("matchToken = new Node(NodeType.%s);\n", tokenName));
+                break;
+            }
+            case NUMBER: {
+                result.append(String.format(
+                        "matchToken = new Node(NodeType.%s, Double.parseDouble(newMatchString));\n",
+                        tokenName));
+                break;
+            }
+            case STRING: {
+                result.append(String.format("matchToken = new Node(NodeType.%s, newMatchString);\n",
+                        tokenName));
+                break;
+            }
+        }
+        result.append("matchString = newMatchString;\n");
+        result.append("}\n");
+        result.append("}\n");
+        return result.toString();
+    }
+
+    public static String generateLexMethod(List<TokenRule> tokenRules, String whitespacePattern) {
+        StringBuilder result = new StringBuilder();
+        result.append("private List<Node> lex(String input) {\n");
+        for (TokenRule token : tokenRules) {
+            result.append(String.format("Pattern %sPattern = Pattern.compile(%s);\n", token.type(),
+                    token.pattern()));
+        }
+        result.append("List<Node> result = new ArrayList<>();\n");
+        result.append("String temp = input;\n");
+        result.append("while(temp.length() > 0) {\n");
+        result.append("String matchString = null;\n");
+        result.append("Node matchToken = null;\n");
+        result.append(String.format("temp = temp.replaceFirst(\"^%s\");\n", whitespacePattern));
+        result.append("if (temp.length() == 0) {\n");
+        result.append("break;\n");
+        result.append("}\n");
+        for (TokenRule token : tokenRules) {
+            result.append(generateTokenCheck(token.type(), token.valueType()));
+        }
+        result.append("if (matchToken != null) {\n");
+        result.append("result.add(matchToken);\n");
+        result.append("}else {\n");
+        result.append("throw new IllegalArgumentException(\"Unknown token\");\n");
+        result.append("}\n");
+        result.append("}\n");
+        result.append("return result;\n");
+        result.append("}\n");
+        return result.toString();
     }
 }

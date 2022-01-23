@@ -44,6 +44,8 @@ public class Entrypoint {
         AstNode ast = PostParser.postParse(parseTree);
         ast = MacroExpander.expand(ast);
         CompileResult compileResult = VslCompiler.compile((ProgramNode) ast);
+        System.out.println(Generator.generateLexMethod(compileResult.tokenRules,
+                compileResult.whitespacePattern));
         compileResult.rules.stream().collect(Collectors.groupingBy(Rule::type))
                 .forEach((name, alternatives) -> {
                     System.out.println(Generator.generateRuleMethod(name, alternatives,
