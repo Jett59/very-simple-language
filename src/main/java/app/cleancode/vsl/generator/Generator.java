@@ -64,7 +64,7 @@ public class Generator {
         result.append("Node result;\n");
         for (int i = 0; i < ruleAlternatives.size(); i++) {
             result.append(String.format(
-                    "if ((result = parse%s%d(tokens, locationCounter) == null) {\n", ruleName, i));
+                    "if ((result = parse%s%d(tokens, locationCounter)) == null) {\n", ruleName, i));
             result.append("locationCounter.location = oldLocationCounter;\n");
             result.append("}else {\n");
             result.append("return result;\n");
@@ -132,7 +132,8 @@ public class Generator {
         result.append("while(temp.length() > 0) {\n");
         result.append("String matchString = null;\n");
         result.append("Node matchToken = null;\n");
-        result.append(String.format("temp = temp.replaceFirst(\"^%s\");\n", whitespacePattern));
+        result.append(
+                String.format("temp = temp.replaceFirst(\"^%s\", \"\");\n", whitespacePattern));
         result.append("if (temp.length() == 0) {\n");
         result.append("break;\n");
         result.append("}\n");
@@ -150,6 +151,15 @@ public class Generator {
         return result.toString();
     }
 
+    private static String locationTypeClass =
+            "private static class LocationCounter {\nint location = 0;\n}\n";
+
+    private static String nodeClass =
+            "public static record Node(NodeType type, Object value, Map<String, Node> children) {\n"
+                    + "public Node(NodeType type, Object value) {\n"
+                    + "this(type, value, new HashMap<>());\n}\n"
+                    + "public Node(NodeType type) {\nthis(type, null);\n}\n}\n";
+
     public static String generateParserClass(CompileResult compileResult,
             Optional<String> packageName) {
         StringBuilder result = new StringBuilder();
@@ -160,10 +170,12 @@ public class Generator {
         result.append("import java.util.ArrayList;\n");
         result.append("import java.util.regex.Pattern;\n");
         result.append("import java.util.regex.Matcher;\n");
+        result.append("import java.util.Map;\n");
+        result.append("import java.util.HashMap;\n");
         result.append("public class Parser {\n");
-        result.append("private static class LocationCounter {\n");
-        result.append("int location;\n");
-        result.append("}\n");
+        result.append(locationTypeClass);
+        result.append(nodeClass);
+        result.append(compileResult.getEnumSource());
         result.append(generateLexMethod(compileResult.tokenRules, compileResult.whitespacePattern));
         compileResult.rules.stream().collect(Collectors.groupingBy(Rule::type))
                 .forEach((name, alternatives) -> {
