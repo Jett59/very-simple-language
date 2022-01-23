@@ -39,6 +39,10 @@ public class Generator {
         result.append(String.format(
                 "private Node parse%s%d(List<Node> tokens, LocationCounter locationCounter) {\n",
                 rule.type(), optionNumber));
+        result.append(String.format("if (tokens.size() <= locationCounter.location + %d) {\n",
+                rule.tokens().size()));
+        result.append("return null;\n");
+        result.append("}\n");
         for (int i = 0; i < rule.tokens().size(); i++) {
             NodeType tokenType = getNodeType(rule.tokens().get(i), nodeTypes);
             result.append(generateNodeCheck(i, tokenType.name(), tokenType.terminal(),
