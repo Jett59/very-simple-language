@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import app.cleancode.vsl.ast.ValueType;
+import app.cleancode.parser.TokenDescription.ValueType;
 import app.cleancode.vsl.compiler.CompileResult;
 import app.cleancode.vsl.compiler.NodeType;
 import app.cleancode.vsl.compiler.Rule;
