@@ -78,6 +78,7 @@ public class Generator {
             result.append("matchedTokens = locationCounter.location - oldLocationCounter;\n");
             result.append("}\n");
         }
+        result.append("locationCounter.location = oldLocationCounter + matchedTokens;\n");
         result.append("return result;\n");
         result.append("}\n");
         for (int i = 0; i < ruleAlternatives.size(); i++) {
