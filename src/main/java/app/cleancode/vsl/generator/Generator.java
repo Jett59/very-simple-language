@@ -33,7 +33,7 @@ public class Generator {
     private static String generateRuleMethod(int optionNumber, Rule rule, Set<NodeType> nodeTypes) {
         StringBuilder result = new StringBuilder();
         result.append(String.format(
-                "public Node parse%s%d(List<Token> tokens, LocationCounter locationCounter) {\n",
+                "private Node parse%s%d(List<Node> tokens, LocationCounter locationCounter) {\n",
                 rule.type(), optionNumber));
         for (int i = 0; i < rule.tokens().size(); i++) {
             NodeType tokenType = getNodeType(rule.tokens().get(i), nodeTypes);
