@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import app.cleancode.parser.TokenDescription.ValueType;
+import app.cleancode.vsl.ast.ValueType;
 import app.cleancode.vsl.compiler.CompileResult;
 import app.cleancode.vsl.compiler.NodeType;
 import app.cleancode.vsl.compiler.Rule;
@@ -61,7 +61,7 @@ public class Generator {
                 "private Node parse%s(List<Node> tokens, LocationCounter locationCounter) {\n",
                 ruleName));
         result.append("final int oldLocationCounter = locationCounter.location;\n");
-        result.append("Node result;\n");
+        result.append("Node result = null;\n");
         result.append("int matchedTokens = 0;\n");
         result.append("Node temp;\n");
         for (int i = 0; i < ruleAlternatives.size(); i++) {
